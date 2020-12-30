@@ -13,6 +13,12 @@ Nano::Search
 
 =cut
 
+=tagline
+
+Persisted Index Search
+
+=cut
+
 =abstract
 
 Persisted Index Search
