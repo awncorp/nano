@@ -1,1 +1,7 @@
 Changelog for Nano
+
+0.01 2020-12-30T20:23:55
+ - Add release updates
+ - Update distribution config
+ - Initial implementation (#2)
+ - Initial commit
