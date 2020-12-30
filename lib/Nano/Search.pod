@@ -3,7 +3,7 @@
 
 =head1 NAME
 
-Nano::Search
+Nano::Search - Persisted Index Search
 
 =cut
 

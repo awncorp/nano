@@ -3,7 +3,7 @@
 
 =head1 NAME
 
-Nano::Nodes
+Nano::Nodes - Persistable Index
 
 =cut
 
@@ -310,6 +310,9 @@ The search method returns a L<Nano::Search> object associated with the invocant.
   serialize() : HashRef
 
 The serialize method returns a persistence representaton of the invocant.
+Circular dependencies can result in a deep recursion error, however, circular
+dependencies can be persisted if modeled properly. B<Note:> blessed objects
+which are neither L<Nano::Node> nor L<Nano::Nodes> will be ignored.
 
 =over 4
 
