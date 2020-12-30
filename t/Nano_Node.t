@@ -13,6 +13,12 @@ Nano::Node
 
 =cut
 
+=tagline
+
+Persistable Entity
+
+=cut
+
 =abstract
 
 Persistable Entity Super Class
@@ -94,6 +100,9 @@ save() : Str
 =method serialize
 
 The serialize method returns a persistence representaton of the invocant.
+Circular dependencies can result in a deep recursion error, however, circular
+dependencies can be persisted if modeled properly. B<Note:> blessed objects
+which are neither L<Nano::Node> nor L<Nano::Nodes> will be ignored.
 
 =signature serialize
 
