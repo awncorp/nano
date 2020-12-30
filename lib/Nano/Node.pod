@@ -3,7 +3,7 @@
 
 =head1 NAME
 
-Nano::Node
+Nano::Node - Persistable Entity
 
 =cut
 
@@ -109,6 +109,9 @@ The save method commits the object data to the storage backend.
   serialize() : HashRef
 
 The serialize method returns a persistence representaton of the invocant.
+Circular dependencies can result in a deep recursion error, however, circular
+dependencies can be persisted if modeled properly. B<Note:> blessed objects
+which are neither L<Nano::Node> nor L<Nano::Nodes> will be ignored.
 
 =over 4
 
