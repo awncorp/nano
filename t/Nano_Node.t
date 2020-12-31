@@ -28,6 +28,7 @@ Persistable Entity Super Class
 =includes
 
 method: drop
+method: load
 method: save
 method: serialize
 
@@ -78,6 +79,24 @@ drop() : Object
   # given: synopsis
 
   $node = $node->drop;
+
+=cut
+
+=method load
+
+The load method reloads and returns an object from source.
+
+=signature load
+
+load() : Object
+
+=example-1 load
+
+  # given: synopsis
+
+  $node->save;
+
+  $node = $node->load;
 
 =cut
 
@@ -134,6 +153,13 @@ $subs->synopsis(fun($tryable) {
 
 $subs->example(-1, 'drop', 'method', fun($tryable) {
   ok my $result = $tryable->result;
+
+  $result
+});
+
+$subs->example(-1, 'load', 'method', fun($tryable) {
+  ok my $result = $tryable->result;
+  ok $result->isa('Nano::Node');
 
   $result
 });

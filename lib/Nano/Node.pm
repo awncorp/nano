@@ -43,6 +43,10 @@ method drop() {
   return $self;
 }
 
+method load() {
+  return $self->nano->find($self->id);
+}
+
 method save() {
   my $serial = $self->serialize;
   my $domain = $self->nano->domain($self->id);
