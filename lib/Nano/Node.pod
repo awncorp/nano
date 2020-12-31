@@ -86,6 +86,26 @@ The drop method removes the prior persisted object data.
 
 =cut
 
+=head2 load
+
+  load() : Object
+
+The load method reloads and returns an object from source.
+
+=over 4
+
+=item load example #1
+
+  # given: synopsis
+
+  $node->save;
+
+  $node = $node->load;
+
+=back
+
+=cut
+
 =head2 save
 
   save() : Str
