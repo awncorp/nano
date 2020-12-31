@@ -62,6 +62,11 @@ sub _dump {
     }
     return $copy;
   }
+  elsif (ref($data)) {
+    return {
+      '$skip' => 1,
+    };
+  }
   else {
     return $data;
   }
@@ -76,6 +81,9 @@ sub _load {
   elsif (UNIVERSAL::isa($data, 'ARRAY')) {
     my $copy = [];
     for (my $i = 0; $i < @$data; $i++) {
+      if (ref($data->[$i]) eq 'HASH') {
+        next if $data->[$i]{'$skip'};
+      }
       $copy->[$i] = _load($self, $data->[$i]);
     }
     return $copy;
