@@ -70,27 +70,53 @@ method fetch(Int $size = 1) {
 }
 
 method first() {
-  my $keyval = $self->table->first or return undef;
-  my $object = $keyval->recv or return undef;
-  return $self->scope($self->nodes->nano->object($object));
+  my $results = [];
+  my $nano = $self->nodes->nano;
+  $self->table->position(undef);
+  while (my $keyval = $self->table->next) {
+    if (my $result = $self->scope($nano->object($keyval->recv))) {
+      push @$results, $result;
+      last;
+    }
+  }
+  return $results->[0];
 }
 
 method last() {
-  my $keyval = $self->table->last or return undef;
-  my $object = $keyval->recv or return undef;
-  return $self->scope($self->nodes->nano->object($object));
+  my $results = [];
+  my $nano = $self->nodes->nano;
+  $self->table->position($self->table->size);
+  while (my $keyval = $self->table->prev) {
+    if (my $result = $self->scope($nano->object($keyval->recv))) {
+      push @$results, $result;
+      last;
+    }
+  }
+  return $results->[0];
 }
 
 method next() {
-  my $keyval = $self->table->next or return undef;
-  my $object = $keyval->recv or return undef;
-  return $self->scope($self->nodes->nano->object($object));
+  my $results = [];
+  my $nano = $self->nodes->nano;
+  while (my $keyval = $self->table->next) {
+    if (my $result = $self->scope($nano->object($keyval->recv))) {
+      push @$results, $result;
+      last;
+    }
+  }
+  return $results->[0];
 }
 
 method prev() {
-  my $keyval = $self->table->prev or return undef;
-  my $object = $keyval->recv or return undef;
-  return $self->scope($self->nodes->nano->object($object));
+  my $results = [];
+  my $nano = $self->nodes->nano;
+  while (my $keyval = $self->table->prev) {
+    if (my $result = $self->scope($nano->object($keyval->recv))) {
+      push @$results, $result;
+      last;
+    }
+  }
+  return $results->[0];
 }
 
 method reset() {
