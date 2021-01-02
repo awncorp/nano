@@ -59,6 +59,7 @@ method count() {
 method drop() {
   my $table = $self->nano->table($self->id);
   $table->drop;
+  $self->next::method;
   return $self;
 }
 
