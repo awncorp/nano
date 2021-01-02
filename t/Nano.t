@@ -27,13 +27,13 @@ Minimalist Object Persistence
 
 =includes
 
-method: domain
 method: dump
 method: find
-method: lookup
+method: keyval
 method: name
 method: object
 method: reify
+method: table
 
 =cut
 
@@ -151,19 +151,19 @@ the L<Zing> toolkit which provides pluggable storage and serialization options.
 
 =cut
 
-=method domain
+=method keyval
 
-The domain method returns a L<Zing::Domain> object for the ID provided.
+The keyval method returns a L<Zing::KeyVal> object for the ID provided.
 
-=signature domain
+=signature keyval
 
-domain(Str $name) : Domain
+keyval(Str $name) : KeyVal
 
-=example-1 domain
+=example-1 keyval
 
   my $nano = Nano->new;
 
-  my $domain = $nano->domain('rachel');
+  my $keyval = $nano->keyval('rachel');
 
 =cut
 
@@ -203,21 +203,21 @@ find(Str $name) : Node
 
 =cut
 
-=method lookup
+=method table
 
-The lookup method returns a L<Zing::Lookup> object for the ID provided.
+The table method returns a L<Zing::Table> object for the ID provided.
 
-=signature lookup
+=signature table
 
-lookup(Str $name) : Lookup
+table(Str $name) : Table
 
-=example-1 lookup
+=example-1 table
 
   my $nano = Nano->new;
 
   my $rachel = $nano->find('rachel');
 
-  my $lookup = $nano->lookup($rachel->friends->id);
+  my $table = $nano->table($rachel->friends->id);
 
 =cut
 
@@ -304,9 +304,9 @@ $subs->synopsis(fun($tryable) {
   $result
 });
 
-$subs->example(-1, 'domain', 'method', fun($tryable) {
+$subs->example(-1, 'keyval', 'method', fun($tryable) {
   ok my $result = $tryable->result;
-  ok my $object = $result->get('object');
+  ok my $object = $result->recv;
   ok $object->{'$name'};
   ok $object->{'$data'};
   ok $object->{'$type'};
@@ -333,10 +333,9 @@ $subs->example(-1, 'find', 'method', fun($tryable) {
   $result
 });
 
-$subs->example(-1, 'lookup', 'method', fun($tryable) {
+$subs->example(-1, 'table', 'method', fun($tryable) {
   ok my $result = $tryable->result;
-  ok my $cursor = $result->cursor;
-  is $cursor->count, 2;
+  is $result->count, 2;
 
   $result
 });

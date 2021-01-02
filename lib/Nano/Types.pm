@@ -38,27 +38,21 @@ register {
 };
 
 register {
-  name => 'Cursor',
-  parent => 'Object',
-  validation => is_instance_of('Zing::Cursor'),
-};
-
-register {
-  name => 'Domain',
-  parent => 'Object',
-  validation => is_instance_of('Zing::Domain'),
-};
-
-register {
   name => 'Env',
   parent => 'Object',
   validation => is_instance_of('Zing::Env'),
 };
 
 register {
-  name => 'Lookup',
+  name => 'KeyVal',
   parent => 'Object',
-  validation => is_instance_of('Zing::Lookup'),
+  validation => is_instance_of('Zing::KeyVal'),
+};
+
+register {
+  name => 'Table',
+  parent => 'Object',
+  validation => is_instance_of('Zing::Table'),
 };
 
 1;

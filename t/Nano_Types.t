@@ -46,59 +46,6 @@ framework.
 
 =cut
 
-=type Cursor
-
-  Cursor
-
-=type-library Cursor
-
-Nano::Types
-
-=type-composite Cursor
-
-  InstanceOf["Zing::Cursor"]
-
-=type-parent Cursor
-
-  Object
-
-=type-example-1 Cursor
-
-  # given: synopsis
-
-  use Zing::Cursor;
-  use Zing::Lookup;
-
-  my $cursor = Zing::Cursor->new(lookup => Zing::Lookup->new(name => 'users'));
-
-=cut
-
-=type Domain
-
-  Domain
-
-=type-library Domain
-
-Nano::Types
-
-=type-composite Domain
-
-  InstanceOf["Zing::Domain"]
-
-=type-parent Domain
-
-  Object
-
-=type-example-1 Domain
-
-  # given: synopsis
-
-  use Zing::Domain;
-
-  my $domain = Zing::Domain->new(name => 'user-12345');
-
-=cut
-
 =type Env
 
   Env
@@ -125,29 +72,29 @@ Nano::Types
 
 =cut
 
-=type Lookup
+=type KeyVal
 
-  Lookup
+  KeyVal
 
-=type-library Lookup
+=type-library KeyVal
 
 Nano::Types
 
-=type-composite Lookup
+=type-composite KeyVal
 
-  InstanceOf["Zing::Lookup"]
+  InstanceOf["Zing::KeyVal"]
 
-=type-parent Lookup
+=type-parent KeyVal
 
   Object
 
-=type-example-1 Lookup
+=type-example-1 KeyVal
 
   # given: synopsis
 
-  use Zing::Lookup;
+  use Zing::KeyVal;
 
-  my $lookup = Zing::Lookup->new(name => 'users');
+  my $domain = Zing::KeyVal->new(name => 'user-12345');
 
 =cut
 
@@ -253,6 +200,32 @@ Nano::Types
   use Nano::Search;
 
   my $search = Nano::Search->new(nodes => Nano::Nodes->new);
+
+=cut
+
+=type Table
+
+  Table
+
+=type-library Table
+
+Nano::Types
+
+=type-composite Table
+
+  InstanceOf["Zing::Table"]
+
+=type-parent Table
+
+  Object
+
+=type-example-1 Table
+
+  # given: synopsis
+
+  use Zing::Table;
+
+  my $lookup = Zing::Table->new(name => 'users');
 
 =cut
 

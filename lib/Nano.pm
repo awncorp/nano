@@ -90,9 +90,7 @@ sub _load {
   }
   elsif (UNIVERSAL::isa($data, 'HASH')) {
     if (defined($data->{'$node'})) {
-      return $self->object(
-        $self->term($data->{'$node'})->object($self->env)->get('object')
-      );
+      return $self->object($self->term($data->{'$node'})->object($self->env)->recv);
     }
     my $copy = {};
     for my $key (keys %$data) {
@@ -110,25 +108,21 @@ sub _load {
 
 # METHODS
 
-method domain(Str $name) {
-  return $self->env->app->domain(name => $name);
-}
-
 method dump(Object $object) {
   return _dump({%{($object)}});
 }
 
 method find(Str $name) {
-  if (my $domain = $self->domain($name)) {
-    if (my $object = $domain->apply->state->{object}) {
+  if (my $keyval = $self->keyval($name)) {
+    if (my $object = $keyval->recv) {
       return $self->object($object);
     }
   }
   return undef;
 }
 
-method lookup(Str $name) {
-  return $self->env->app->lookup(name => $name);
+method keyval(Str $name) {
+  return $self->env->app->keyval(name => $name);
 }
 
 method name(Object $object) {
@@ -141,6 +135,10 @@ method object(HashRef $object) {
 
 method reify(Str $name, HashRef $data) {
   return Data::Object::Space->new($name)->build($self->_load($data));
+}
+
+method table(Str $name) {
+  return $self->env->app->table(name => $name, type => 'keyval');
 }
 
 method term(Str $term) {
