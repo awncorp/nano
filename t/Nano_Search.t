@@ -64,10 +64,9 @@ Nano::Types
 
 =attributes
 
-cursor: ro, opt, Cursor
-lookup: ro, opt, Lookup
 nodes: ro, req, Nodes
 scopes: ro, opt, ArrayRef[CodeRef]
+table: ro, opt, Table
 
 =cut
 
@@ -296,6 +295,8 @@ prev() : Maybe[Object]
 
   use Nano::Node;
 
+  $search->table->position(3);
+
   $search->nodes->set(Nano::Node->new(id => '1st'));
   $search->nodes->set(Nano::Node->new(id => '2nd'));
   $search->nodes->set(Nano::Node->new(id => '3rd'));
@@ -307,6 +308,8 @@ prev() : Maybe[Object]
   # given: synopsis
 
   use Nano::Node;
+
+  $search->table->position(3);
 
   $search->nodes->set(Nano::Node->new(id => '1st'));
   $search->nodes->set(Nano::Node->new(id => '2nd'));

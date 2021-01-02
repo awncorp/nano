@@ -38,8 +38,8 @@ fun new_nano($self) {
 # METHODS
 
 method drop() {
-  my $domain = $self->nano->domain($self->id);
-  $domain->drop;
+  my $keyval = $self->nano->keyval($self->id);
+  $keyval->drop;
   return $self;
 }
 
@@ -49,9 +49,9 @@ method load() {
 
 method save() {
   my $serial = $self->serialize;
-  my $domain = $self->nano->domain($self->id);
-  $domain->merge(object => $serial);
-  return $domain->term;
+  my $keyval = $self->nano->keyval($self->id);
+  $keyval->send($serial);
+  return $keyval->term;
 }
 
 method serialize() {

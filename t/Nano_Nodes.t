@@ -30,13 +30,10 @@ Persistable Index Super Class
 method: add
 method: all
 method: count
-method: del
 method: drop
 method: first
 method: get
 method: last
-method: next
-method: prev
 method: scope
 method: search
 method: serialize
@@ -130,23 +127,6 @@ count() : Int
   # given: synopsis
 
   my $count = $nodes->count;
-
-=cut
-
-=method del
-
-The del method removes the object from the index and returns the object (if
-found).
-
-=signature del
-
-del(Str $name) : Maybe[Object]
-
-=example-1 del
-
-  # given: synopsis
-
-  my $result = $nodes->del('0000001');
 
 =cut
 
@@ -365,12 +345,6 @@ $subs->example(-1, 'count', 'method', fun($tryable) {
   $result
 });
 
-$subs->example(-1, 'del', 'method', fun($tryable) {
-  ok !(my $result = $tryable->result);
-
-  $result
-});
-
 $subs->example(-1, 'drop', 'method', fun($tryable) {
   ok my $result = $tryable->result;
 
@@ -390,18 +364,6 @@ $subs->example(-1, 'get', 'method', fun($tryable) {
 });
 
 $subs->example(-1, 'last', 'method', fun($tryable) {
-  ok !(my $result = $tryable->result);
-
-  $result
-});
-
-$subs->example(-1, 'next', 'method', fun($tryable) {
-  ok !(my $result = $tryable->result);
-
-  $result
-});
-
-$subs->example(-1, 'prev', 'method', fun($tryable) {
   ok !(my $result = $tryable->result);
 
   $result

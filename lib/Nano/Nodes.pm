@@ -42,10 +42,9 @@ fun new_type($self) {
 
 method add(HashRef $data) {
   my $object = $self->nano->reify($self->type, $data);
-  my $serial = $object->serialize;
-  my $lookup = $self->nano->lookup($self->id);
-  my $domain = $lookup->set($object->id);
-  $domain->merge(object => $serial);
+  my $table = $self->nano->table($self->id);
+  my $keyval = $table->set($object->id);
+  $keyval->send($object->serialize);
   return $object;
 }
 
@@ -57,16 +56,9 @@ method count() {
   return $self->search->count;
 }
 
-method del(Str $name) {
-  my $lookup = $self->nano->lookup($self->id);
-  my $object = $self->get($name);
-  $lookup->del($name);
-  return $object;
-}
-
 method drop() {
-  my $lookup = $self->nano->lookup($self->id);
-  $lookup->drop;
+  my $table = $self->nano->table($self->id);
+  $table->drop;
   return $self;
 }
 
@@ -75,22 +67,14 @@ method first() {
 }
 
 method get(Str $name) {
-  my $lookup = $self->nano->lookup($self->id);
-  my $domain = $lookup->get($name) or return undef;
-  my $object = $domain->get('object');
+  my $table = $self->nano->table($self->id);
+  my $keyval = $table->get($name) or return undef;
+  my $object = $keyval->recv or return undef;
   return $self->nano->object($object);
 }
 
 method last() {
   return $self->search->last;
-}
-
-method next() {
-  return $self->search->next;
-}
-
-method prev() {
-  return $self->search->prev;
 }
 
 method scope(CodeRef $callback) {
@@ -105,7 +89,7 @@ method search() {
   require Nano::Search; Nano::Search->new(
     scopes => $self->scopes,
     nodes => $self,
-  )
+  );
 }
 
 method serialize() {
@@ -118,10 +102,9 @@ method serialize() {
 }
 
 method set(Node $object) {
-  my $serial = $object->serialize;
-  my $lookup = $self->nano->lookup($self->id);
-  my $domain = $lookup->set($object->id);
-  $domain->merge(object => $serial);
+  my $table = $self->nano->table($self->id);
+  my $keyval = $table->set($object->id);
+  $keyval->send($object->serialize);
   return $object;
 }
 

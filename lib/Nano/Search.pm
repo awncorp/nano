@@ -15,24 +15,14 @@ use Data::Object::ClassHas;
 
 # ATTRIBUTES
 
-has cursor => (
+has table => (
   is => 'ro',
-  isa => 'Cursor',
+  isa => 'Table',
   new => 1,
 );
 
-fun new_cursor($self) {
-  $self->lookup->cursor
-}
-
-has lookup => (
-  is => 'ro',
-  isa => 'Lookup',
-  new => 1,
-);
-
-fun new_lookup($self) {
-  $self->nodes->nano->lookup($self->nodes->id)
+fun new_table($self) {
+  $self->nodes->nano->table($self->nodes->id)
 }
 
 has nodes => (
@@ -54,11 +44,11 @@ fun new_scopes($self) {
 # METHODS
 
 method all() {
-  $self->fetch($self->cursor->count)
+  $self->fetch($self->table->count)
 }
 
 method count() {
-  @{$self->scopes} ? scalar(@{$self->all}) : $self->cursor->count
+  @{$self->scopes} ? scalar(@{$self->all}) : $self->table->count
 }
 
 method fetch(Int $size = 1) {
@@ -68,8 +58,8 @@ method fetch(Int $size = 1) {
   if (!$size) {
     return $results;
   }
-  while (my $domain = $self->cursor->next) {
-    if (my $result = $self->scope($nano->object($domain->get('object')))) {
+  while (my $keyval = $self->table->next) {
+    if (my $result = $self->scope($nano->object($keyval->recv))) {
       $i = push @$results, $result;
     }
     if ($i >= $size) {
@@ -80,31 +70,31 @@ method fetch(Int $size = 1) {
 }
 
 method first() {
-  my $domain = $self->cursor->first or return undef;
-  my $object = $domain->get('object') or return undef;
+  my $keyval = $self->table->first or return undef;
+  my $object = $keyval->recv or return undef;
   return $self->scope($self->nodes->nano->object($object));
 }
 
 method last() {
-  my $domain = $self->cursor->last or return undef;
-  my $object = $domain->get('object') or return undef;
+  my $keyval = $self->table->last or return undef;
+  my $object = $keyval->recv or return undef;
   return $self->scope($self->nodes->nano->object($object));
 }
 
 method next() {
-  my $domain = $self->cursor->next or return undef;
-  my $object = $domain->get('object') or return undef;
+  my $keyval = $self->table->next or return undef;
+  my $object = $keyval->recv or return undef;
   return $self->scope($self->nodes->nano->object($object));
 }
 
 method prev() {
-  my $domain = $self->cursor->prev or return undef;
-  my $object = $domain->get('object') or return undef;
+  my $keyval = $self->table->prev or return undef;
+  my $object = $keyval->recv or return undef;
   return $self->scope($self->nodes->nano->object($object));
 }
 
 method reset() {
-  $self->cursor->reset;
+  $self->table->reset;
   return $self;
 }
 
