@@ -120,6 +120,9 @@ method find(Str $name) {
   }
   return undef;
 }
+method hash(Str $name) {
+  require Digest::SHA; Digest::SHA::sha1_hex($name);
+}
 
 method keyval(Str $name) {
   return $self->env->app->keyval(name => $name);
