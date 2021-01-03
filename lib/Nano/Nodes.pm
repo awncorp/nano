@@ -17,6 +17,16 @@ extends 'Nano::Node';
 
 # ATTRIBUTES
 
+has orders => (
+  is => 'ro',
+  isa => 'ArrayRef[CodeRef]',
+  new => 1,
+);
+
+fun new_orders($self) {
+  []
+}
+
 has scopes => (
   is => 'ro',
   isa => 'ArrayRef[CodeRef]',
@@ -78,6 +88,14 @@ method last() {
   return $self->search->last;
 }
 
+method order(CodeRef $callback) {
+  my $instance = ref($self)->new(
+    %{$self},
+    orders => [@{$self->orders}, $callback],
+  );
+  return $instance;
+}
+
 method scope(CodeRef $callback) {
   my $instance = ref($self)->new(
     %{$self},
@@ -88,6 +106,7 @@ method scope(CodeRef $callback) {
 
 method search() {
   require Nano::Search; Nano::Search->new(
+    orders => $self->orders,
     scopes => $self->scopes,
     nodes => $self,
   );

@@ -34,6 +34,7 @@ method: drop
 method: first
 method: get
 method: last
+method: order
 method: scope
 method: search
 method: serialize
@@ -67,6 +68,7 @@ Nano::Node
 
 =attributes
 
+orders: ro, opt, ArrayRef[CodeRef]
 scopes: ro, opt, ArrayRef[CodeRef]
 type: ro, req, Str
 
@@ -230,6 +232,27 @@ prev() : Maybe[Object]
 
 =cut
 
+=method order
+
+The order method registers a sort order (search ordering) and returns a new
+invocant instance.
+
+=signature order
+
+order(CodeRef $callback) : Object
+
+=example-1 order
+
+  # given: synopsis
+
+  $nodes = $nodes->order(sub {
+    my ($a, $b) = @_;
+
+    $a->id cmp $b->id
+  });
+
+=cut
+
 =method scope
 
 The scope method registers a scope (search filter) and returns a new invocant
@@ -365,6 +388,13 @@ $subs->example(-1, 'get', 'method', fun($tryable) {
 
 $subs->example(-1, 'last', 'method', fun($tryable) {
   ok !(my $result = $tryable->result);
+
+  $result
+});
+
+$subs->example(-1, 'order', 'method', fun($tryable) {
+  ok my $result = $tryable->result;
+  ok @{$result->orders};
 
   $result
 });
