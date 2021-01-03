@@ -124,18 +124,6 @@ This attribute is read-only, accepts `(Env)` values, and is optional.
 
 This package implements the following methods:
 
-## domain
-
-    domain(Str $name) : Domain
-
-The domain method returns a [Zing::Domain](https://metacpan.org/pod/Zing%3A%3ADomain) object for the ID provided.
-
-- domain example #1
-
-        my $nano = Nano->new;
-
-        my $domain = $nano->domain('rachel');
-
 ## dump
 
     dump(Object $object) : HashRef
@@ -164,19 +152,17 @@ ID provided.
 
         my $phoebe = $nano->find('phoebe');
 
-## lookup
+## keyval
 
-    lookup(Str $name) : Lookup
+    keyval(Str $name) : KeyVal
 
-The lookup method returns a [Zing::Lookup](https://metacpan.org/pod/Zing%3A%3ALookup) object for the ID provided.
+The keyval method returns a [Zing::KeyVal](https://metacpan.org/pod/Zing%3A%3AKeyVal) object for the ID provided.
 
-- lookup example #1
+- keyval example #1
 
         my $nano = Nano->new;
 
-        my $rachel = $nano->find('rachel');
-
-        my $lookup = $nano->lookup($rachel->friends->id);
+        my $keyval = $nano->keyval('rachel');
 
 ## name
 
@@ -232,6 +218,20 @@ The reify method constructs an object from the class name and data provided.
           id => 'rachel',
           name => 'rachel',
         });
+
+## table
+
+    table(Str $name) : Table
+
+The table method returns a [Zing::Table](https://metacpan.org/pod/Zing%3A%3ATable) object for the ID provided.
+
+- table example #1
+
+        my $nano = Nano->new;
+
+        my $rachel = $nano->find('rachel');
+
+        my $table = $nano->table($rachel->friends->id);
 
 # AUTHOR
 
