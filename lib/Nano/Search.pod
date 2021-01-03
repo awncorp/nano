@@ -50,22 +50,6 @@ This package has the following attributes:
 
 =cut
 
-=head2 cursor
-
-  cursor(Cursor)
-
-This attribute is read-only, accepts C<(Cursor)> values, and is optional.
-
-=cut
-
-=head2 lookup
-
-  lookup(Lookup)
-
-This attribute is read-only, accepts C<(Lookup)> values, and is optional.
-
-=cut
-
 =head2 nodes
 
   nodes(Nodes)
@@ -74,11 +58,27 @@ This attribute is read-only, accepts C<(Nodes)> values, and is required.
 
 =cut
 
+=head2 orders
+
+  orders(ArrayRef[CodeRef])
+
+This attribute is read-only, accepts C<(ArrayRef[CodeRef])> values, and is optional.
+
+=cut
+
 =head2 scopes
 
   scopes(ArrayRef[CodeRef])
 
 This attribute is read-only, accepts C<(ArrayRef[CodeRef])> values, and is optional.
+
+=cut
+
+=head2 table
+
+  table(Table)
+
+This attribute is read-only, accepts C<(Table)> values, and is optional.
 
 =cut
 
@@ -330,6 +330,67 @@ The next method returns the next object based on the currently held cursor
 
 =cut
 
+=head2 order
+
+  order(ArrayRef[Object] $results) : ArrayRef[Object]
+
+The order method determines the sort order of the array of objects provided
+based on the registered ordering routines.
+
+=over 4
+
+=item order example #1
+
+  # given: synopsis
+
+  use Nano::Node;
+
+  my $results = [
+    Nano::Node->new(id => '1st'),
+    Nano::Node->new(id => '2nd'),
+    Nano::Node->new(id => '3rd'),
+  ];
+
+  $search = Nano::Search->new(
+    nodes => $nodes,
+    orders => [sub {
+      my ($a, $b) = @_;
+      $a->id cmp $b->id
+    }],
+  );
+
+  $results = $search->order($results);
+
+=back
+
+=over 4
+
+=item order example #2
+
+  # given: synopsis
+
+  use Nano::Node;
+
+  my $results = [
+    Nano::Node->new(id => '1st'),
+    Nano::Node->new(id => '2nd'),
+    Nano::Node->new(id => '3rd'),
+  ];
+
+  $search = Nano::Search->new(
+    nodes => $nodes,
+    orders => [sub {
+      my ($a, $b) = @_;
+      $b->id cmp $a->id
+    }],
+  );
+
+  $results = $search->order($results);
+
+=back
+
+=cut
+
 =head2 prev
 
   prev() : Maybe[Object]
@@ -355,6 +416,8 @@ The prev method returns the previous object based on the currently held cursor
 
   use Nano::Node;
 
+  $search->table->position(3);
+
   $search->nodes->set(Nano::Node->new(id => '1st'));
   $search->nodes->set(Nano::Node->new(id => '2nd'));
   $search->nodes->set(Nano::Node->new(id => '3rd'));
@@ -370,6 +433,8 @@ The prev method returns the previous object based on the currently held cursor
   # given: synopsis
 
   use Nano::Node;
+
+  $search->table->position(3);
 
   $search->nodes->set(Nano::Node->new(id => '1st'));
   $search->nodes->set(Nano::Node->new(id => '2nd'));

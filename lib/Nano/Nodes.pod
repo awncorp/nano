@@ -54,6 +54,14 @@ This package has the following attributes:
 
 =cut
 
+=head2 orders
+
+  orders(ArrayRef[CodeRef])
+
+This attribute is read-only, accepts C<(ArrayRef[CodeRef])> values, and is optional.
+
+=cut
+
 =head2 scopes
 
   scopes(ArrayRef[CodeRef])
@@ -133,25 +141,6 @@ the results.
 
 =cut
 
-=head2 del
-
-  del(Str $name) : Maybe[Object]
-
-The del method removes the object from the index and returns the object (if
-found).
-
-=over 4
-
-=item del example #1
-
-  # given: synopsis
-
-  my $result = $nodes->del('0000001');
-
-=back
-
-=cut
-
 =head2 drop
 
   drop() : Object
@@ -226,39 +215,24 @@ the result.
 
 =cut
 
-=head2 next
+=head2 order
 
-  next() : Maybe[Object]
+  order(CodeRef $callback) : Object
 
-The next method proxies to the attached L<Nano::Search> instance and returns
-the result.
-
-=over 4
-
-=item next example #1
-
-  # given: synopsis
-
-  my $next = $nodes->next;
-
-=back
-
-=cut
-
-=head2 prev
-
-  prev() : Maybe[Object]
-
-The prev method proxies to the attached L<Nano::Search> instance and returns
-the result.
+The order method registers a sort order (search ordering) and returns a new
+invocant instance.
 
 =over 4
 
-=item prev example #1
+=item order example #1
 
   # given: synopsis
 
-  my $prev = $nodes->prev;
+  $nodes = $nodes->order(sub {
+    my ($a, $b) = @_;
+
+    $a->id cmp $b->id
+  });
 
 =back
 
