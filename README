@@ -125,18 +125,6 @@ METHODS
 
     This package implements the following methods:
 
- domain
-
-      domain(Str $name) : Domain
-
-    The domain method returns a Zing::Domain object for the ID provided.
-
-    domain example #1
-
-        my $nano = Nano->new;
-      
-        my $domain = $nano->domain('rachel');
-
  dump
 
       dump(Object $object) : HashRef
@@ -165,19 +153,17 @@ METHODS
       
         my $phoebe = $nano->find('phoebe');
 
- lookup
+ keyval
 
-      lookup(Str $name) : Lookup
+      keyval(Str $name) : KeyVal
 
-    The lookup method returns a Zing::Lookup object for the ID provided.
+    The keyval method returns a Zing::KeyVal object for the ID provided.
 
-    lookup example #1
+    keyval example #1
 
         my $nano = Nano->new;
       
-        my $rachel = $nano->find('rachel');
-      
-        my $lookup = $nano->lookup($rachel->friends->id);
+        my $keyval = $nano->keyval('rachel');
 
  name
 
@@ -234,6 +220,20 @@ METHODS
           id => 'rachel',
           name => 'rachel',
         });
+
+ table
+
+      table(Str $name) : Table
+
+    The table method returns a Zing::Table object for the ID provided.
+
+    table example #1
+
+        my $nano = Nano->new;
+      
+        my $rachel = $nano->find('rachel');
+      
+        my $table = $nano->table($rachel->friends->id);
 
 AUTHOR
 

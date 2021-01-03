@@ -44,79 +44,6 @@ This package declares the following type constraints:
 
 =cut
 
-=head2 cursor
-
-  Cursor
-
-This type is defined in the L<Nano::Types> library.
-
-=over 4
-
-=item cursor parent
-
-  Object
-
-=back
-
-=over 4
-
-=item cursor composition
-
-  InstanceOf["Zing::Cursor"]
-
-=back
-
-=over 4
-
-=item cursor example #1
-
-  # given: synopsis
-
-  use Zing::Cursor;
-  use Zing::Lookup;
-
-  my $cursor = Zing::Cursor->new(lookup => Zing::Lookup->new(name => 'users'));
-
-=back
-
-=cut
-
-=head2 domain
-
-  Domain
-
-This type is defined in the L<Nano::Types> library.
-
-=over 4
-
-=item domain parent
-
-  Object
-
-=back
-
-=over 4
-
-=item domain composition
-
-  InstanceOf["Zing::Domain"]
-
-=back
-
-=over 4
-
-=item domain example #1
-
-  # given: synopsis
-
-  use Zing::Domain;
-
-  my $domain = Zing::Domain->new(name => 'user-12345');
-
-=back
-
-=cut
-
 =head2 env
 
   Env
@@ -153,15 +80,15 @@ This type is defined in the L<Nano::Types> library.
 
 =cut
 
-=head2 lookup
+=head2 keyval
 
-  Lookup
+  KeyVal
 
 This type is defined in the L<Nano::Types> library.
 
 =over 4
 
-=item lookup parent
+=item keyval parent
 
   Object
 
@@ -169,21 +96,21 @@ This type is defined in the L<Nano::Types> library.
 
 =over 4
 
-=item lookup composition
+=item keyval composition
 
-  InstanceOf["Zing::Lookup"]
+  InstanceOf["Zing::KeyVal"]
 
 =back
 
 =over 4
 
-=item lookup example #1
+=item keyval example #1
 
   # given: synopsis
 
-  use Zing::Lookup;
+  use Zing::KeyVal;
 
-  my $lookup = Zing::Lookup->new(name => 'users');
+  my $domain = Zing::KeyVal->new(name => 'user-12345');
 
 =back
 
@@ -329,6 +256,42 @@ This type is defined in the L<Nano::Types> library.
   use Nano::Search;
 
   my $search = Nano::Search->new(nodes => Nano::Nodes->new);
+
+=back
+
+=cut
+
+=head2 table
+
+  Table
+
+This type is defined in the L<Nano::Types> library.
+
+=over 4
+
+=item table parent
+
+  Object
+
+=back
+
+=over 4
+
+=item table composition
+
+  InstanceOf["Zing::Table"]
+
+=back
+
+=over 4
+
+=item table example #1
+
+  # given: synopsis
+
+  use Zing::Table;
+
+  my $lookup = Zing::Table->new(name => 'users');
 
 =back
 

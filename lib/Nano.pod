@@ -143,24 +143,6 @@ This package implements the following methods:
 
 =cut
 
-=head2 domain
-
-  domain(Str $name) : Domain
-
-The domain method returns a L<Zing::Domain> object for the ID provided.
-
-=over 4
-
-=item domain example #1
-
-  my $nano = Nano->new;
-
-  my $domain = $nano->domain('rachel');
-
-=back
-
-=cut
-
 =head2 dump
 
   dump(Object $object) : HashRef
@@ -201,21 +183,19 @@ ID provided.
 
 =cut
 
-=head2 lookup
+=head2 keyval
 
-  lookup(Str $name) : Lookup
+  keyval(Str $name) : KeyVal
 
-The lookup method returns a L<Zing::Lookup> object for the ID provided.
+The keyval method returns a L<Zing::KeyVal> object for the ID provided.
 
 =over 4
 
-=item lookup example #1
+=item keyval example #1
 
   my $nano = Nano->new;
 
-  my $rachel = $nano->find('rachel');
-
-  my $lookup = $nano->lookup($rachel->friends->id);
+  my $keyval = $nano->keyval('rachel');
 
 =back
 
@@ -289,6 +269,26 @@ The reify method constructs an object from the class name and data provided.
     id => 'rachel',
     name => 'rachel',
   });
+
+=back
+
+=cut
+
+=head2 table
+
+  table(Str $name) : Table
+
+The table method returns a L<Zing::Table> object for the ID provided.
+
+=over 4
+
+=item table example #1
+
+  my $nano = Nano->new;
+
+  my $rachel = $nano->find('rachel');
+
+  my $table = $nano->table($rachel->friends->id);
 
 =back
 
