@@ -33,6 +33,7 @@ method: fetch
 method: first
 method: last
 method: next
+method: order
 method: prev
 method: reset
 method: scope
@@ -65,6 +66,7 @@ Nano::Types
 =attributes
 
 nodes: ro, req, Nodes
+orders: ro, opt, ArrayRef[CodeRef]
 scopes: ro, opt, ArrayRef[CodeRef]
 table: ro, opt, Table
 
@@ -271,6 +273,61 @@ next() : Maybe[Object]
 
   $next = $search->next;
   $next = $search->next;
+
+=cut
+
+=method order
+
+The order method determines the sort order of the array of objects provided
+based on the registered ordering routines.
+
+=signature order
+
+order(ArrayRef[Object] $results) : ArrayRef[Object]
+
+=example-1 order
+
+  # given: synopsis
+
+  use Nano::Node;
+
+  my $results = [
+    Nano::Node->new(id => '1st'),
+    Nano::Node->new(id => '2nd'),
+    Nano::Node->new(id => '3rd'),
+  ];
+
+  $search = Nano::Search->new(
+    nodes => $nodes,
+    orders => [sub {
+      my ($a, $b) = @_;
+      $a->id cmp $b->id
+    }],
+  );
+
+  $results = $search->order($results);
+
+=example-2 order
+
+  # given: synopsis
+
+  use Nano::Node;
+
+  my $results = [
+    Nano::Node->new(id => '1st'),
+    Nano::Node->new(id => '2nd'),
+    Nano::Node->new(id => '3rd'),
+  ];
+
+  $search = Nano::Search->new(
+    nodes => $nodes,
+    orders => [sub {
+      my ($a, $b) = @_;
+      $b->id cmp $a->id
+    }],
+  );
+
+  $results = $search->order($results);
 
 =cut
 
@@ -510,6 +567,32 @@ $subs->example(-3, 'next', 'method', fun($tryable) {
   ok my $result = $tryable->result;
   ok $result->isa('Nano::Node');
   is $result->id, '2nd';
+
+  $result
+});
+
+$subs->example(-1, 'order', 'method', fun($tryable) {
+  ok my $result = $tryable->result;
+  is @$result, 3;
+  ok $result->[0]->isa('Nano::Node');
+  is $result->[0]->id, '1st';
+  ok $result->[1]->isa('Nano::Node');
+  is $result->[1]->id, '2nd';
+  ok $result->[2]->isa('Nano::Node');
+  is $result->[2]->id, '3rd';
+
+  $result
+});
+
+$subs->example(-2, 'order', 'method', fun($tryable) {
+  ok my $result = $tryable->result;
+  is @$result, 3;
+  ok $result->[0]->isa('Nano::Node');
+  is $result->[0]->id, '3rd';
+  ok $result->[1]->isa('Nano::Node');
+  is $result->[1]->id, '2nd';
+  ok $result->[2]->isa('Nano::Node');
+  is $result->[2]->id, '1st';
 
   $result
 });
