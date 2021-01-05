@@ -14,6 +14,12 @@ extends 'Types::Standard';
 # VERSION
 
 register {
+  name => 'Env',
+  parent => 'Object',
+  validation => is_instance_of('Nano::Env'),
+};
+
+register {
   name => 'Nano',
   parent => 'Object',
   validation => is_instance_of('Nano'),
@@ -35,12 +41,6 @@ register {
   name => 'Search',
   parent => 'Object',
   validation => is_instance_of('Nano::Search'),
-};
-
-register {
-  name => 'Env',
-  parent => 'Object',
-  validation => is_instance_of('Zing::Env'),
 };
 
 register {
