@@ -183,6 +183,26 @@ ID provided.
 
 =cut
 
+=head2 hash
+
+  hash(Str $name) : Str
+
+The hash method returns a SHA-1 digest for the string provided.
+
+=over 4
+
+=item hash example #1
+
+  my $nano = Nano->new;
+
+  my $email = 'me@example.com';
+
+  $nano->hash($email);
+
+=back
+
+=cut
+
 =head2 keyval
 
   keyval(Str $name) : KeyVal
