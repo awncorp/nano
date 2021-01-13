@@ -50,6 +50,12 @@ register {
 };
 
 register {
+  name => 'Stash',
+  parent => 'Object',
+  validation => is_consumer_of('Nano::Stash'),
+};
+
+register {
   name => 'Table',
   parent => 'Object',
   validation => is_instance_of('Zing::Table'),
