@@ -261,6 +261,50 @@ This type is defined in the L<Nano::Types> library.
 
 =cut
 
+=head2 stash
+
+  Stash
+
+This type is defined in the L<Nano::Types> library.
+
+=over 4
+
+=item stash parent
+
+  Object
+
+=back
+
+=over 4
+
+=item stash composition
+
+  ConsumerOf["Nano::Stash"]
+
+=back
+
+=over 4
+
+=item stash example #1
+
+  # given: synopsis
+
+  package Example::Stash;
+
+  use Moo;
+
+  extends 'Nano::Node';
+
+  with 'Nano::Stash';
+
+  package main;
+
+  my $stash = Example::Stash->new;
+
+=back
+
+=cut
+
 =head2 table
 
   Table
