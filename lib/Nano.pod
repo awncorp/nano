@@ -143,6 +143,24 @@ This package implements the following methods:
 
 =cut
 
+=head2 domain
+
+  domain(Str $name) : Domain
+
+The domain method returns a L<Zing::Domain> object for the ID provided.
+
+=over 4
+
+=item domain example #1
+
+  my $nano = Nano->new;
+
+  my $domain = $nano->domain('changelog');
+
+=back
+
+=cut
+
 =head2 dump
 
   dump(Object $object) : HashRef
