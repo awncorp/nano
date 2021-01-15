@@ -108,6 +108,10 @@ sub _load {
 
 # METHODS
 
+method domain(Str $name) {
+  return $self->env->app->domain(name => $name);
+}
+
 method dump(Object $object) {
   return _dump({%{($object)}});
 }
